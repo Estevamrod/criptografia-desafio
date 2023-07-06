@@ -1,0 +1,18 @@
+{
+  "name": "criptografia",
+  "version": "1.0.0",
+  "description": "desafio de criptografia",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^1.14.9",
+    "semver": "^7.5.3",
+    "sequelize": "^6.32.1"
+  }
+}
