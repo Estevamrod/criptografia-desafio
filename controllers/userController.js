@@ -1,28 +1,35 @@
 const User = require('./../models/user');
-const db = require('./../models/db');
 
-(async() => {
-    await db.sync();
-});
-
+exports.get = async(req, res) => {
+    const query = await User.findAll();
+    if (query[0] !== 0 && query.length !== 0 ) {
+        res.status(200).json({
+            'status': 'success',
+            'data': query
+        })
+    } else {
+        res.status(406).json({
+            'status': 'failed',
+            'message': 'Db is empty'
+        })
+    }
+}
 
 exports.createUser = async(req, res) => {
-    if (req.body.uDoc !== "" && req.body.cCT !== "" && req.body.val !== "") {
-        const uDoc = req.body.userDocument;
-        const cCT = req.body.creditCardToken;
-        const val = req.body.value;
+    if (req.body !== "") {
+        const { userDocument, creditCardToken , value } = req.body;
         const uCreate = await User.create({
-            userDocument: uDoc,
-            creditCardToken: cCT,
-            value: val
+            userDocument: userDocument,
+            creditCardToken: creditCardToken,
+            value: value
         });
         if (uCreate[0] !== 0) {
             res.status(201).json({
                 'status': 'success',
                 'data': {
-                    'uDoc': uDoc,
-                    'cCT': cCT,
-                    'val': val
+                    'userDocument': userDocument,
+                    'creditCardToken': creditCardToken,
+                    'value': value
                 }
             });
         } else {
@@ -45,41 +52,30 @@ exports.createUser = async(req, res) => {
 }
 
 exports.updateUser = async(req, res) => {
-    if (req.params.id !== null) {
-        const Id = req.params.id;
-        const uUpdate = await User.update(req.body, {
-            where: {
-                id: Id
-            }
-        });
-        if (uUpdate[0] !== 0) {
-            res.status(200).json({
-                'status': 'success',
-                'data': req.body
-            });
-        } else {
-            res.status(404).json({
-                'status': 'failed',
-                'data': {
-                    'message': 'Column incorrect!'
-                }
-            });
+    const uUpdate = await User.update(req.body, {
+        where: {
+            id: req.params.id
         }
+    });
+    if (uUpdate[0] !== 0) {
+        res.status(200).json({
+            'status': 'success',
+            'data': req.body
+        });
     } else {
-        res.status(406).json({
+        res.status(404).json({
             'status': 'failed',
             'data': {
-                'message': 'Params incorrect!'
+                'message': 'Column incorrect!'
             }
         });
     }
 }
 
 exports.deleteUser = async(req, res) => {
-    const id = req.params.id;
     const delUser = await User.destroy({
         where:{
-            id: id
+            id: req.params.id
         }
     });
     if (delUser[0] !== 0) {
