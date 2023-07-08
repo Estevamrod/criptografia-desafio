@@ -5,11 +5,21 @@ const app = express();
 app.get('/', async(req,res) => {
     res.json({
         'instructions': {
-            'URLS': {
-                'get': '/get',
-                'add': '/add',
-                'update': '/update/:id',
-                'delete': '/delete/:id'
+            'GET': {
+                'instruction': 'you just type /get and press enter and you got all the data in DB',
+                'syntax': 'localhost:1000/get'
+            },
+            'ADD': {
+                'instruction': 'you dont need a param, but you need to create some keys with default values => (userDocument, creditCardToken and value) and provide data.',
+                'syntax': 'localhost:1000/add'
+            },
+            'UPGRADE': {
+                'instruction': 'mainly you need pass a param and 3 default keys, these keys you choose what you want, you use to change some data so you can use 3 of them (userDocument, creditCardToken or value).',
+                'syntax': 'localhost:1000/update/:id (can be 1,2,3...)'
+            },
+            'DELETE': {
+                'instruction': 'you just need to pass a valid param to URL and the magic happen',
+                'syntax': 'localhost:1000/delete/:id (can be 1,2,3...)'
             }
         }
     });
