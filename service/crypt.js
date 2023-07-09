@@ -1,15 +1,14 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
-const { secret } = process.env;
 
 const encode = async(data) => {
-    if (secret) {
-        return jwt.sign({data}, secret);
+    if (process.env.JWT_SECRET) {
+        return jwt.sign({data}, process.env.JWT_SECRET, { algorithm: 'HS512' });
     }
 }
 const decode = async(token) => {
     try {
-        return jwt.verify(token, secret);
+        return jwt.verify(token,process.env.JWT_SECRET)
     } catch (error) {
         return error;
     }
