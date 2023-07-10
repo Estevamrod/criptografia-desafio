@@ -7,7 +7,7 @@ Desafio de nível médio proposta pelo [repositório do Back-End Brasil](https:/
 * <kbd>NodeJS</kbd>
 * <kbd>Express</kbd>
 * <kbd>MySQL</kbd>
-* <kbd>JWT</kbd>
+* <kbd>Bcrypt</kbd>
 
 ## Objetivos
 
@@ -19,7 +19,7 @@ Desafio de nível médio proposta pelo [repositório do Back-End Brasil](https:/
 1. Clonar o repositório ```git clone https://github.com/Estevamrod/desafioCriptografia.git```
 2. Instalar as dependências ```npm i --save express```
     * ```npm i --save sequelize```
-    * ```npm i --save jsonwebtoken```
+    * ```npm i --save bcrypt```
     * ```npm i --save dotenv```
     * ```npm i --save nodemon```
 3. Execute a aplicação ```npm start```
