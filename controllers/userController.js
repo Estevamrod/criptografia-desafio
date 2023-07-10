@@ -2,20 +2,18 @@ const userService = require('../service/userService');
 
 exports.get = async(req, res, next) => {
     try {
-        const token = req.headers['postman-token'];
-        const query = userService.get(token);
-        console.log(query);
-        // if (query.length !== 0) {
-        //     res.status(200).json({
-        //         'status': 'success',
-        //         'data': query
-        //     });
-        // } else {
-        //     res.status(406).json({
-        //         'status': 'failed',
-        //         'message': 'Db is empty'
-        //     });
-        // }
+        const query = await userService.get();
+        if (query.length !== 0) {
+            res.status(200).json({
+                'status': 'success',
+                'data': query
+            });
+        } else {
+            res.status(406).json({
+                'status': 'failed',
+                'message': 'Db is empty'
+            });
+        }
     }catch(error) {
         next(error);
     }
@@ -43,7 +41,7 @@ exports.getbyId = async(req, res, next) => {
 exports.createUser = async(req, res, next) => {
         try {
             const { userDocument, creditCardToken , value } = req.body;
-            const uSCreate = await userService.create({userDocument,creditCardToken,value});
+            const uSCreate = await userService.create(userDocument,creditCardToken,value);
             if (uSCreate) {
                 res.status(201).json({
                     'status': 'success',
