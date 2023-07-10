@@ -10,12 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.1.0",
-    "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "mysql2": "^3.5.0",
     "nodemon": "^1.14.9",
     "semver": "^7.5.3",
-    "sequelize": "^6.32.1"
+    "sequelize": "^6.32.1",
+    "glob-parent": ">=5.1.2",
+    "got": ">=11.8.5"
   }
 }
