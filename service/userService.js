@@ -1,14 +1,15 @@
 const User = require('./../models/user');
-const crypt = require('./crypt');
+const bcrypt = require('bcrypt');
 
 exports.get = async() => {
-    const gUser = await User.findAll();
-    return gUser;
+    return User.findAll();
 }
-
+exports.getbyId = async(id) => {
+    return User.findAll({where:{id:id}});
+}
 exports.create = async (userDocument, creditCardToken, value) => {
-    const uDoccoded = await crypt.encode(userDocument);
-    const cctCoded = await crypt.encode(creditCardToken);
+    const uDoccoded = await bcrypt.hash(userDocument, 5);
+    const cctCoded =  await bcrypt.hash(creditCardToken, 5);
     const createUser = await User.create({
         userDocument: uDoccoded,
         creditCardToken: cctCoded,
@@ -26,8 +27,8 @@ exports.update = async({userDocument, creditCardToken, value}, id) => {
         });
     } else {
         if ((creditCardToken && creditCardToken && value)) {
-            const uDocCoded = await crypt.encode(userDocument);
-            const cctCoded = await crypt.encode(creditCardToken);
+            const uDocCoded = await bcrypt.hash(userDocument, 5);
+            const cctCoded = await bcrypt.hash(creditCardToken, 5);
             return await User.update({userDocument:uDocCoded,creditCardToken:cctCoded, value:value}, {
                 where: {
                     id: id
@@ -35,7 +36,7 @@ exports.update = async({userDocument, creditCardToken, value}, id) => {
             });
         }
         if ((userDocument) || (userDocument && value)) {
-            const uDocCoded = await crypt.encode(userDocument);
+            const uDocCoded = await bcrypt.hash(userDocument, 5);
             return await User.update({userDocument:uDocCoded, value:value}, {
                 where: {
                     id: id
@@ -43,7 +44,7 @@ exports.update = async({userDocument, creditCardToken, value}, id) => {
             });
         }
         if ((creditCardToken) || (creditCardToken && value)) {
-            const cctCoded = await crypt.encode(creditCardToken);
+            const cctCoded = await bcrypt.hash(creditCardToken, 5);
             return await User.update({creditCardToken:cctCoded}, {
                 where: {
                     id: id
@@ -53,5 +54,5 @@ exports.update = async({userDocument, creditCardToken, value}, id) => {
     }
 }
 exports.delete = async(id) => {
-    return await User.destroy({ where: { id: id}});
+    return User.destroy({ where: { id: id}});
 }

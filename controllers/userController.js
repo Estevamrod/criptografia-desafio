@@ -19,6 +19,25 @@ exports.get = async(req, res, next) => {
     }
 }
 
+exports.getbyId = async(req, res, next) => {
+    try {
+        const byID = await userService.getbyId(req.params.id);
+        if (byID.length !== 0) {
+            res.status(200).json({
+                'status': 'success',
+                'data': byID
+            });
+        } else {
+            res.status(406).json({
+                'status': 'failed',
+                'message': 'params pass incorrect or db is empty'
+            })
+        }
+    } catch(error) {
+        next(error);
+    }
+}
+
 exports.createUser = async(req, res, next) => {
         try {
             const { userDocument, creditCardToken , value } = req.body;
